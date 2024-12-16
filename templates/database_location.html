@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Database Location</h2>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>SQLite Database Path:</strong></p>
+            <pre>{{ db_path }}</pre>
+            
+            <div class="mt-3">
+                <a href="{{ url_for('export_entity_types') }}" class="btn btn-primary">
+                    Export Entity Types
+                </a>
+                <a href="{{ url_for('export_entities') }}" class="btn btn-success">
+                    Export Entities
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

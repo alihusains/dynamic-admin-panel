@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Create New Entity Type</h2>
+    <form method="POST" id="entityTypeForm">
+        <div class="mb-3">
+            <label>Entity Type Name</label>
+            <input type="text" name="type_name" class="form-control" required>
+        </div>
+        
+        <div id="attributesContainer">
+            <div class="attribute-row mb-2">
+                <div class="input-group">
+                    <input type="text" name="attributes" class="form-control" placeholder="Attribute Name" required>
+                    <button type="button" class="btn btn-danger remove-attribute" style="display:none;">Remove</button>
+                </div>
+            </div>
+        </div>
+        
+        <button type="button" id="addAttributeBtn" class="btn btn-secondary mb-2">Add Attribute</button>
+        <button type="submit" class="btn btn-primary">Create Entity Type</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('addAttributeBtn').addEventListener('click', function() {
+    const container = document.getElementById('attributesContainer');
+    const newRow = document.createElement('div');
+    newRow.className = 'attribute-row mb-2';
+    newRow.innerHTML = `
+        <div class="input-group">
+            <input type="text" name="attributes" class="form-control" placeholder="Attribute Name" required>
+            <button type="button" class="btn btn-danger remove-attribute">Remove</button>
+        </div>
+    `;
+    container.appendChild(newRow);
+
+    // Show remove buttons
+    const removeButtons = container.querySelectorAll('.remove-attribute');
+    removeButtons.forEach(button => {
+        button.style.display = 'block';
+    });
+
+    // Add remove functionality
+    newRow.querySelector('.remove-attribute').addEventListener('click', function() {
+        container.removeChild(newRow);
+        
+        // Hide remove buttons if only one row remains
+        const remainingRows = container.querySelectorAll('.attribute-row');
+        if (remainingRows.length === 1) {
+            remainingRows[0].querySelector('.remove-attribute').style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

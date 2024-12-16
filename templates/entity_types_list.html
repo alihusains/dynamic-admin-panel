@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Entity Types</h2>
+    <div class="mb-3">
+        <a href="{{ url_for('create_entity_type') }}" class="btn btn-success">Create New Entity Type</a>
+        <a href="{{ url_for('export_entity_types') }}" class="btn btn-primary">Export Entity Types</a>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Attributes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for type in entity_types %}
+            <tr>
+                <td>{{ type.name }}</td>
+                <td>{{ ', '.join(type.attributes) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

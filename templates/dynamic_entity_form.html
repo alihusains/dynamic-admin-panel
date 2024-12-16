@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>
+        {% if edit_mode %}
+            Edit Entity
+        {% else %}
+            Create New Entity
+        {% endif %}
+    </h2>
+    
+    <form method="POST">
+        {% if not edit_mode %}
+        <div class="mb-3">
+            <label>Entity Type</label>
+            <select name="entity_type" class="form-control" required>
+                <option value="">Select Entity Type</option>
+                {% for type in entity_types %}
+                <option value="{{ type.name }}">{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        {% if entity_types %}
+            {% set first_type = entity_types[0] %}
+            {% for attr in first_type.attributes %}
+            <div class="mb-3">
+                <label>{{ attr|capitalize }}</label>
+                <input type="text" name="{{ attr }}" class="form-control" placeholder="Enter {{ attr }}">
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endif %}
+
+        {% if edit_mode %}
+            <input type="hidden" name="entity_type" value="{{ entity.type }}">
+            <h3>{{ entity.type }} Details</h3>
+            {% for key, value in entity.data.items() %}
+            <div class="mb-3">
+                <label>{{ key|capitalize }}</label>
+                <input type="text" name="{{ key }}" class="form-control" value="{{ value }}">
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">
+            {% if edit_mode %}
+                Update Entity
+            {% else %}
+                Create Entity
+            {% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}
